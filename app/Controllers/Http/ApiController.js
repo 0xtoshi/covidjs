@@ -91,7 +91,7 @@ class ApiController {
                 casesPerOneMillion : value.casesPerOneMillion,
                 deathsPerOneMillion : value.deathsPerOneMillion,
                 flag : value.countryInfo.flag,
-                iso2 : value.countryInfo.flag 
+                iso2 : value.countryInfo.iso2 
 
 
 

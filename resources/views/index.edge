@@ -126,17 +126,22 @@
             
             <script> var json = {{ json.flag }}
             
-           
+            @if(datum.iso2) 
+              @set('flag',datum.iso2.toLowerCase())
+            @else
+              @set('flag','xx')
+            @endif
+              
             
             </script>
             <tr>
               <td class="purple white-text" width="5%"></td>
               @if( datum.cases >= 10000  )
-              <td class="red darken-4 white-text" width="5%"><img width="8%" src="{{ datum.flag }}"> {{ datum.country }}</td>
+              <td class="red darken-4 white-text" width="5%"><span class="flag-icon flag-icon-{{ flag }}"></span>                {{ datum.country }}</td>
               <td class="red darken-4 white-text" width="5%">{{ datum.cases }}</td>
               @else
             
-              <td class="red darken-1 white-text" width="5%"><img width="8%" src="{{ datum.flag }}"> {{ datum.country }}</td>
+              <td class="red darken-1 white-text" width="5%"><span class="flag-icon flag-icon-{{ flag }}"></span>                {{ datum.country }}</td>
               <td class="red darken-1 white-text" width="5%">{{ datum.cases }}</td>
 
               @endif

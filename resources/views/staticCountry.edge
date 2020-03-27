@@ -26,9 +26,9 @@
     <div class="container">
         <br>
         
-        <h5 class="white-text "><i class="material-icons white-text">equalizer</i> COVID-19</h5>
+    <h5 class="white-text "><span class="flag-icon flag-icon-{{{ Summary.iso2.toLowerCase() }}}"></span> {{ country }}</h5>
         
-        <p class=" white-text"> World Monitoring Data for COVID-19 Pandemic </p>
+        <p class=" white-text"> COVID-19 CASE in {{ country }} </p>
     </div>
     <br>
   </div>
@@ -36,33 +36,89 @@
 
   <div class="row center">
 
-    <div class="col s12 m4">
-      <div class="card orange darken-1">
+    <div class="col s12 m3">
+      <div class="card pink darken-4">
         <div class="card-content white-text">
           <span class="card-title">Case</span>
-        <h5 class="count" id="cases">{{ dataSummary.cases }}</h5>
-        <span> Total Cases in World </span>
+        <h5 class="count" id="cases">{{ Summary.cases }}</h5>
+        <span> Total Case </span>
         </div>
       </div>
     </div>
-    <div class="col s12 m4">
-        <div class="card blue-grey darken-3">
+
+    <div class="col s12 m3">
+        <div class="card orange darken-3">
+          <div class="card-content white-text">
+            <span class="card-title">Today Case</span>
+          <h5 class="count" id="cases">{{ Summary.todayCases }}</h5>
+          <span> Case in this days </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col s12 m3">
+        <div class="card grey darken-4">
           <div class="card-content white-text">
             <span class="card-title">Deaths</span>
-            <h5 class="count" id="deaths">{{ dataSummary.deaths }}</h5>
-            <span> Total Deaths in WorldWide </span>
+          <h5 class="count" id="cases">{{ Summary.deaths }}</h5>
+          <span> Total Deaths </span>
           </div>
         </div>
       </div>
-      <div class="col s12 m4">
-        <div class="card green darken-1">
+
+      <div class="col s12 m3">
+        <div class="card grey darken-3">
+          <div class="card-content white-text">
+            <span class="card-title">Today Deaths</span>
+          <h5 class="count" id="cases">{{ Summary.todayDeaths	 }}</h5>
+          <span> Deaths in this days </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col s12 m3">
+        <div class="card green darken-4">
           <div class="card-content white-text">
             <span class="card-title">Recovered</span>
-            <h5 class="count" id="recovered">{{ dataSummary.recovered }}</h5>
-            <span> Total Recovered in WorldWide </span>
+          <h5 class="count" id="cases">{{ Summary.recovered	}}</h5>
+          <span> Total case recovered </span>
           </div>
         </div>
       </div>
+
+      <div class="col s12 m3">
+        <div class="card purple darken-4">
+          <div class="card-content white-text">
+            <span class="card-title">Active Case</span>
+          <h5 class="count" id="cases">{{ Summary.active }}</h5>
+          <span> Total active case </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col s12 m3">
+        <div class="card red darken-3">
+          <div class="card-content white-text">
+            <span class="card-title">Critical</span>
+          <h5 class="count" id="cases">{{ Summary.critical }}</h5>
+          <span> Total Critical case </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col s12 m3">
+        <div class="card indigo darken-3">
+          <div class="card-content white-text">
+            <span class="card-title">Case Per One Million</span>
+          <h5 class="count" id="cases">{{ Summary.casesPerOneMillion }}</h5>
+          <span> Case Per One Million </span>
+          </div>
+        </div>
+      </div>
+
+      
+      
+
 
       <div class="col s12 m6">
         <div class="card text-white">
@@ -99,78 +155,35 @@
     <div id="man" class="col s12">
       <div class="card material-table">
         <div class="table-header">
-          <span class="table-title">COVID-19 Case</span>
+          <span class="table-title">Historical Data</span>
           <div class="actions">
             <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
           </div>
         </div>
-        <table class=" striped" id="covid">
+        <table class="striped" id="covid">
           <thead>
             <tr>
               <th  width="5%">No</th>
               <th>Country</th>
               <th>Cases</th>
-              <th>Today Cases</th>
               <th>Deaths</th>
-              <th>Today Deaths</th>
-              <th>Ratio (Deaths/Case)</th>
               <th>Recovered</th>
+              <th>Date</th>
             </tr>
           </thead>
           <tbody>
 
 
             
-            @each( datum in dataCaseNow )
-            @set('json', datum.countryInfo)
+            @each( datum in dataTable )
             
-            <script> var json = {{ json.flag }}
-            
-            @if(datum.iso2) 
-              @set('flag',datum.iso2.toLowerCase())
-            @else
-              @set('flag','xx')
-            @endif
-              
-            
-            </script>
-            <tr class='clickable-row' data-href='/info/{{datum.country}}'><a href="/info/{{datum.country}}"></a>
-              <td class="purple white-text" width="5%"></td>
-              @if( datum.cases >= 10000  )
-              <td class="red darken-4 white-text" width="5%"><span class="flag-icon flag-icon-{{ flag }}"></span>                {{ datum.country }}</td>
-              <td class="red darken-4 white-text" width="5%">{{ datum.cases }}</td>
-              @else
-            
-              <td class="red darken-1 white-text" width="5%"><span class="flag-icon flag-icon-{{ flag }}"></span>                {{ datum.country }}</td>
-              <td class="red darken-1 white-text" width="5%">{{ datum.cases }}</td>
-
-              @endif
-
-              @if( datum.todayCases > 0  )
-              <td class="orange lighten-1 white-text" width="5%"> + {{ datum.todayCases }}</td>
-              @else
-              <td class="green lighten-1" width="5%">{{ datum.todayCases }}</td>
-              @endif
-              
-              @if( datum.deaths >= 1000 )
-              <td class="blue-grey darken-3 white-text" width="5%">{{ datum.deaths }}</td>
-              @else
-              <td class="blue-grey darken-1 white-text" width="5%">{{ datum.deaths }}</td>
-              @endif
-              @if( datum.todayDeaths > 0 )
-              <td class="blue-grey darken-3 white-text" width="5%">+ {{ datum.todayDeaths }}</td>
-              @else
-              <td class="green lighten-1 white-text" width="5%">{{ datum.todayDeaths }}</td>
-              @endif
-              
-              <td class="grey daeken-1 white-text" width="5%">{{ ((datum.deaths/datum.cases) * 100) }}</td>
-              
-              
-              @if( datum.recovered > 100 )
-              <td class="green lighten-1 white-text center" width="5%">{{ datum.recovered }}</td>
-              @else
-              <td class="green lighten-3 black-text center" width="5%">{{ datum.recovered }}</td>
-              @endif
+            <tr>
+              <td class="" width="5%"> </td>
+              <td class="" width="5%"><span class="flag-icon flag-icon-{{{ Summary.iso2.toLowerCase() }}}"></span>  {{ datum.country }} </td>
+              <td class="" width="5%"> {{ datum.cases }} </td>
+              <td class="" width="5%"> {{ datum.deaths }} </td>
+              <td class="" width="5%"> {{ datum.recovered }} </td>
+              <td class="" width="5%"> {{ datum.date }} </td>
             </tr>
             
             @endeach
@@ -194,11 +207,6 @@
 })(jQuery); // end of jQuery name space
 
 
-jQuery(document).ready(function($) {
-            $(".clickable-row").click(function() {
-                window.location = $(this).data("href");
-            });
-        });
 
 
 
@@ -211,10 +219,6 @@ var t = $('#covid').DataTable( {
             targets: [ 0, 1, 2,3,4 ],
             className: 'mdl-data-table__cell--non-numeric',
             lengthData : 100,
-            targets: [6],
-            render(v){
-            return Number(v).toFixed(2)+' %'
-            }
         } ],
         "order": [[ 2, 'DESC' ]]
     } );
@@ -228,7 +232,7 @@ var t = $('#covid').DataTable( {
 
     function rendercase()
         {
-            var url = "/rest/api/dataOneMonth";
+            var url = "/rest/api/chart/{{ country }}";
             var date = new Array();
             var cases = new Array();
             var recovered = new Array();
@@ -278,9 +282,9 @@ var t = $('#covid').DataTable( {
                         display: true
                     },
                     title: {
-                        display: false,
-                        position : "top",
-                        text : "Worlwide Covid19 historial chart"
+                        display: true,
+                        position: "top",
+                        text : "{{country}} Covid19 historial chart"
                     },
                     scales: {
                     xAxes: [{
@@ -315,7 +319,7 @@ var t = $('#covid').DataTable( {
         function render_pie_global()
         {
          
-          $.get('/rest/api/PieGlobal',function(value){
+          $.get('/rest/api/chart/pie/{{ country }}',function(value){
 
             console.log(value)
             
@@ -323,13 +327,17 @@ var t = $('#covid').DataTable( {
             var ctx = document.getElementById("global_pie").getContext('2d');
             var myDoughnutChart = new Chart(ctx, {
               type: 'doughnut',
+
+              // [ dataSummary.cases, dataSummary.deaths, dataSummary.recovered, dataSummary.active, dataSummary.critical ]
               data: {
                   datasets: [{
                       data: value,
                       backgroundColor: [
                       '#f0932b',
                       '#2c3e50',
-                      '#27ae60'
+                      '#27ae60',
+                      '#6c5ce7',
+                      '#c0392b'
                     ],
                   }],
 
@@ -337,7 +345,9 @@ var t = $('#covid').DataTable( {
                   labels: [
                       'Cases',
                       'Death',
-                      'Recovered'
+                      'Recovered',
+                      'Active',
+                      'Critical'
                   ]
               },
               options: {
@@ -349,7 +359,20 @@ var t = $('#covid').DataTable( {
                 animateScale: true,
                 animateRotate: true
               }
-            }
+             },
+             tooltips: {
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        var dataset = data.datasets[tooltipItem.datasetIndex];
+                    var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                        return previousValue + currentValue;
+                    });
+                    var currentValue = dataset.data[tooltipItem.index];
+                    var percentage = Math.floor(((currentValue/total) * 100)+0.5);         
+                    return percentage + "%";
+                    }
+                }
+                }
                             
               });
             

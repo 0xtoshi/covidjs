@@ -17,6 +17,7 @@
 const Route = use('Route')
 
 Route.get('/','UiController.index')
+Route.get('/info/:country', 'UiController.staticCountry').as('country')
 Route.get('/update/data','ApiController.getData')
 Route.get('/update/dailycase','ApiController.getDailyCase')
 Route.get('/update/dailyoverview','ApiController.getDailyOverview')
@@ -26,3 +27,5 @@ Route.get('/update/dailyoverview','ApiController.getDailyOverview')
 Route.get('/rest/api/dataSummary','RestController.dataSummary');
 Route.get('/rest/api/dataOneMonth','RestController.dataOneMonth');
 Route.get('/rest/api/PieGlobal','RestController.RenderCHartPie');
+Route.get('/rest/api/chart/:country', 'RestController.getDataCountry').as('country')
+Route.get('/rest/api/chart/pie/:country', 'RestController.getDataCountryPie').as('country')

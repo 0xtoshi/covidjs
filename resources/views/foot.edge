@@ -1,0 +1,39 @@
+
+    <footer>
+
+        <div class="container-fluid blue darken-3 ngaah">
+    
+            <div class="container">
+                <br>
+                
+                <h5 class="white-text "><i class="material-icons white-text">equalizer</i> COVID-19</h5>
+                
+                <p class=" white-text"> Copyright &copy; 2020 Ngaah.id Created By Gilang Dandung  </p>
+            </div>
+            <br>
+          </div>
+
+    </footer>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
+    <script src="/assets/js/dataTables.min.js"></script>
+    
+    <script>
+
+        $('.count').each(function () {
+            $(this).prop('Counter',0).animate({
+                Counter: $(this).text()
+            }, {
+                duration: 1000,
+                easing: 'swing',
+                step: function (now) {
+                    $(this).text(Math.ceil(now));
+                }
+            });
+        });
+              
+    </script>

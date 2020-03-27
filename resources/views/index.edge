@@ -1,0 +1,354 @@
+@include('head')
+
+<script>
+
+
+
+
+
+</script>
+
+<nav class="purple darken-4" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">NGAAH.ID</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#">Home</a></li>
+      </ul>
+
+      <ul id="nav-mobile" class="sidenav">
+        <li><a href="#">Home</a></li>
+      </ul>
+      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+
+  <div class="container-fluid blue darken-3 ngaah">
+    
+    <div class="container">
+        <br>
+        
+        <h5 class="white-text "><i class="material-icons white-text">equalizer</i> COVID-19</h5>
+        
+        <p class=" white-text"> WorldWide Monitoring Data for COVID-19 Pandemic </p>
+    </div>
+    <br>
+  </div>
+
+
+  <div class="row center">
+
+    <div class="col s12 m3">
+      <div class="card orange darken-1">
+        <div class="card-content white-text">
+          <span class="card-title">Case</span>
+        <h5 class="count" id="cases">{{ dataSummary.cases }}</h5>
+        <span> Total Cases in WorldWide </span>
+        </div>
+      </div>
+    </div>
+    <div class="col s12 m3">
+        <div class="card blue-grey darken-3">
+          <div class="card-content white-text">
+            <span class="card-title">Deaths</span>
+            <h5 class="count" id="deaths">{{ dataSummary.deaths }}</h5>
+            <span> Total Deaths in WorldWide </span>
+          </div>
+        </div>
+      </div>
+      <div class="col s12 m3">
+        <div class="card green darken-1">
+          <div class="card-content white-text">
+            <span class="card-title">Recovered</span>
+            <h5 class="count" id="recovered">{{ dataSummary.recovered }}</h5>
+            <span> Total Recovered in WorldWide </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col s12 m3">
+        <div class="card text-white">
+          <div class="card-content">
+           
+            <canvas height="100%" id="global_pie" class="chartjs-chart mt-4"></canvas>
+          </div>
+        </div>
+      </div>
+      
+
+
+
+      
+      <div class="col s12 m12">
+        <div class="card  darken-1">
+          <div class="card-content white-text">
+            <span class="card-title">Chart COVID-19</span>
+            <canvas height="60" id="globalcase" class="chartjs-chart mt-4"></canvas>
+          </div>
+        </div>
+      </div>
+
+  </div>
+
+
+
+
+
+
+
+
+  <div class="row">
+    <div id="man" class="col s12">
+      <div class="card material-table">
+        <div class="table-header">
+          <span class="table-title">COVID-19 Case</span>
+          <div class="actions">
+            <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
+          </div>
+        </div>
+        <table class=" striped" id="covid">
+          <thead>
+            <tr>
+              <th  width="5%">No</th>
+              <th>Country</th>
+              <th>Cases</th>
+              <th>Today Cases</th>
+              <th>Deaths</th>
+              <th>Today Deaths</th>
+              <th>Ratio (Deaths/Case)</th>
+              <th>Recovered</th>
+            </tr>
+          </thead>
+          <tbody>
+
+
+            
+            @each( datum in dataCaseNow )
+            @set('json', datum.countryInfo)
+            
+            <script> var json = {{ json.flag }}
+            
+           
+            
+            </script>
+            <tr>
+              <td class="purple white-text" width="5%"></td>
+              @if( datum.cases >= 10000  )
+              <td class="red darken-4 white-text" width="5%"><img width="8%" src="{{ datum.flag }}"> {{ datum.country }}</td>
+              <td class="red darken-4 white-text" width="5%">{{ datum.cases }}</td>
+              @else
+            
+              <td class="red darken-1 white-text" width="5%"><img width="8%" src="{{ datum.flag }}"> {{ datum.country }}</td>
+              <td class="red darken-1 white-text" width="5%">{{ datum.cases }}</td>
+
+              @endif
+
+              @if( datum.todayCases > 0  )
+              <td class="orange lighten-1 white-text" width="5%"> + {{ datum.todayCases }}</td>
+              @else
+              <td class="green lighten-1" width="5%">{{ datum.todayCases }}</td>
+              @endif
+              
+              @if( datum.deaths >= 1000 )
+              <td class="blue-grey darken-3 white-text" width="5%">{{ datum.deaths }}</td>
+              @else
+              <td class="blue-grey darken-1 white-text" width="5%">{{ datum.deaths }}</td>
+              @endif
+              @if( datum.todayDeaths > 0 )
+              <td class="blue-grey darken-3 white-text" width="5%">+ {{ datum.todayDeaths }}</td>
+              @else
+              <td class="green lighten-1 white-text" width="5%">{{ datum.todayDeaths }}</td>
+              @endif
+              
+              <td class="grey daeken-1 white-text" width="5%">{{ ((datum.deaths/datum.cases) * 100) }}</td>
+              
+              
+              @if( datum.recovered > 100 )
+              <td class="green lighten-1 white-text center" width="5%">{{ datum.recovered }}</td>
+              @else
+              <td class="green lighten-3 black-text center" width="5%">{{ datum.recovered }}</td>
+              @endif
+            </tr>
+            
+            @endeach
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+@include('foot')
+
+<script>
+(function($){
+  $(function(){
+
+    $('.sidenav').sidenav();
+
+  }); // end of document ready
+})(jQuery); // end of jQuery name space
+
+
+
+
+
+var t = $('#covid').DataTable( {
+        "pageLength": 50,
+        "columnDefs": [ {
+            "searchable": false,
+            "orderable": true,
+            "targets": 0,
+            targets: [ 0, 1, 2,3,4 ],
+            className: 'mdl-data-table__cell--non-numeric',
+            lengthData : 100,
+            targets: [6],
+            render(v){
+            return Number(v).toFixed(2)+' %'
+            }
+        } ],
+        "order": [[ 2, 'DESC' ]]
+    } );
+ 
+    t.on( 'order.dt search.dt', function () {
+        t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+        } );
+    } ).draw();
+
+
+    function rendercase()
+        {
+            var url = "/rest/api/dataOneMonth";
+            var date = new Array();
+            var cases = new Array();
+            var recovered = new Array();
+            var deaths = new Array();
+            $.get(url, function(response){
+            response.forEach(function(data){
+                date.push(data.date);
+                cases.push(data.cases);
+                recovered.push(data.recovered);
+                deaths.push(data.deaths);
+            });
+            var ctx = document.getElementById("globalcase").getContext('2d');
+                var myChart = new Chart(ctx, {
+                  type: 'line',
+                  data: {
+                      labels:date,
+                      datasets: [
+                        {
+                          label: 'Case',
+                          data: cases,                     
+					                borderColor: "#f1c40f",
+                          
+                          
+                        },
+                        {
+                          label: 'Recovered',
+                          data: recovered,
+                          borderColor: "green"
+                          
+                        },
+                        {
+                          label: 'Deaths',
+                          data: deaths,
+                          borderColor : "red"
+                          
+                        },
+                      ]
+                  },
+                  
+                options: {
+        
+                    responsive: true,
+                    maintainAspectRatio: true, 
+                    aspectRatio : 2,
+                   
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: false
+                    },
+                    scales: {
+                    xAxes: [{
+                        display: false,       
+                        gridLines: {
+                            color: '#e9eff9',
+                            lineWidth: 0,
+                            borderDash: [3]
+                        }
+                    }],
+                    yAxes: [{
+                    	display: false,
+                        gridLines: {
+                            color: '#e9eff9',
+                            lineWidth: 1,
+                            borderDash: [3]
+                        },
+		              	
+                    }],
+                    },
+                    
+                    
+                
+                }
+              });
+          });
+        }
+        rendercase();
+
+
+
+        function render_pie_global()
+        {
+         
+          $.get('/rest/api/PieGlobal',function(value){
+
+            console.log(value)
+            Chart.defaults.global.legend.display = false;
+
+            var ctx = document.getElementById("global_pie").getContext('2d');
+            var myDoughnutChart = new Chart(ctx, {
+              type: 'doughnut',
+              data: {
+                  datasets: [{
+                      data: value,
+                      backgroundColor: [
+                      '#f0932b',
+                      '#2c3e50',
+                      '#27ae60'
+                    ],
+                  }],
+
+                  // These labels appear in the legend and in the tooltips when hovering different arcs
+                  labels: [
+                      'Cases',
+                      'Death',
+                      'Recovered'
+                  ]
+              },
+              options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              animation: {
+                animateScale: true,
+                animateRotate: true
+              }
+            }
+                            
+              });
+            
+
+
+          });
+
+
+          
+        }
+          
+        render_pie_global();
+
+</script>

@@ -7,6 +7,7 @@ class CountrySchema extends Schema {
   up () {
     this.create('countries', (table) => {
       table.increments()
+      table.text('country')
       table.timestamps()
     })
   }

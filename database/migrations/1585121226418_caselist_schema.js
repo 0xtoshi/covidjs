@@ -13,6 +13,7 @@ class CaselistSchema extends Schema {
       table.integer('deaths').nullable()
       table.integer('recovered').nullable()
       table.integer('province_id').unsigned().references('id').inTable('provinces').nullable()
+      table.timestamps()
     })
   }
 

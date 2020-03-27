@@ -1,31 +1,38 @@
-# Adonis fullstack application
-
-This is the fullstack boilerplate for AdonisJs, it comes pre-configured with.
-
-1. Bodyparser
-2. Session
-3. Authentication
-4. Web security middleware
-5. CORS
-6. Edge template engine
-7. Lucid ORM
-8. Migrations and seeds
-
-## Setup
-
-Use the adonis command to install the blueprint
-
-```bash
-adonis new yardstick
-```
-
-or manually clone the repo and then run `npm install`.
+<h1> CovidJS </h1>
 
 
-### Migrations
+run in production
 
-Run the following command to run startup migrations.
+git clone https://github.com/ximplah/covidjs.git
 
-```js
-adonis migration:run
-```
+> npm install
+> npm i -g @adonisjs/cli adonis
+> adonis migration:run
+
+<h2> Configure  Nginx </h2>
+
+Install Nginx
+
+apt install nginx
+apt install mysql-server
+
+<dt>NGINX Config</dt>
+  <dd>
+  server {
+  listen 80;
+
+  server_name myapp.com;
+
+  location / {
+      proxy_pass http://localhost:3333;
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection 'upgrade';
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-Proto $scheme;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_cache_bypass $http_upgrade;
+  }
+}
+</dd>

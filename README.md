@@ -3,21 +3,28 @@
 
 run in production
 
+```
 git clone https://github.com/ximplah/covidjs.git
 
 > npm install
 > npm i -g @adonisjs/cli adonis
 > adonis migration:run
 
+```
 <h2> Configure  Nginx </h2>
 
 Install Nginx
 
+```
 apt install nginx
 apt install mysql-server
 
-<dt>NGINX Config</dt>
-  <dd>
+```
+
+NGINX Config
+
+
+```
   server {
   listen 80;
 
@@ -35,4 +42,4 @@ apt install mysql-server
       proxy_cache_bypass $http_upgrade;
   }
 }
-</dd>
+```

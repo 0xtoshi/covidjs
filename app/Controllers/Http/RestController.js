@@ -56,7 +56,10 @@ class RestController {
 
         var params = request.params
         var country = params.country
-
+        if(country == "USA")
+        {
+            var country = "US"
+        }
         var cases = await Case.query().
         select('cases','deaths','recovered','date').
         innerJoin('countries','countries.id','=','caselists.country_id').
@@ -76,6 +79,7 @@ class RestController {
         var dataSummary = await DailyCase.query().
         select('cases','deaths','recovered','active','critical').
         where('dates',dateNow).
+        where('country',country).
         first()
 
         var datas = [ dataSummary.cases, dataSummary.deaths, dataSummary.recovered, dataSummary.active, dataSummary.critical ]

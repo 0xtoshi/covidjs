@@ -1,5 +1,7 @@
 <h1> CovidJS </h1>
 
+<a href="https://github.com/ximplah/COVID-REACT"> New Repo Update </a>
+
 
 run in production
 
